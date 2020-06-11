@@ -2,7 +2,7 @@
  * @Author: Bryan 
  * @Date: 2020-05-28 11:41:06 
  * @Last Modified by: Bryan
- * @Last Modified time: 2020-05-28 14:12:29
+ * @Last Modified time: 2020-06-11 09:51:55
  */
 
 import { property } from './decoratorsUntils'
@@ -44,7 +44,7 @@ export function regex (regex, notice = '') {
         this[realKey] = val
         let reg = new RegExp(regex)
         if (!reg.test(val)) {
-          console.error(`landz-sensors-fullstack 报错：神策对象中${realKey}异常 regex 规则，${notice}`)
+          console.error(`landz-sensors-fullstack 报错：神策对象中${realKey}异常不符合 regex 规则，当前值为${val}，${notice}`)
         }
       } else {
         console.error(`landz-sensors-fullstack 报错：装饰器 regex 只能用来修饰字符串或数字类型属性值；${realKey}格式传入错误，当前${typeof(val)}`)
