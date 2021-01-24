@@ -1,8 +1,8 @@
-/*
+ /*
  * @Author: Bryan 
  * @Date: 2020-05-28 11:41:06 
  * @Last Modified by: Bryan
- * @Last Modified time: 2020-06-11 09:51:55
+ * @Last Modified time: 2021-01-22 16:48:41
  */
 
 import { property } from './decoratorsUntils'
@@ -52,3 +52,22 @@ export function regex (regex, notice = '') {
     })
   }
 } 
+
+/**
+ * 自定义属性的 getter 函数
+ * @param {*} dealFn 设置的 getter 函数
+ */
+export function defineGetter (dealFn) {
+  return function (target, key, descriptor) {
+    return property(target, key, descriptor, function(propertyName, val) {
+      const realKey = propertyName.replace('_', '')
+      Object.defineProperty(this, realKey, {
+        enumerable: true,
+        get: function () {
+          return dealFn(val)
+        }
+      })
+    })
+  }
+}
+

@@ -2,7 +2,7 @@
  * @Author: Howie 
  * @Date: 2019-07-17 09:36:40 
  * @Last Modified by: Bryan
- * @Last Modified time: 2020-05-28 15:01:08
+ * @Last Modified time: 2021-01-22 09:59:08
  */
 
 import resolve from 'rollup-plugin-node-resolve'
@@ -13,7 +13,7 @@ let resCof = {
   input: 'src/index.js',
   output: {
     file: 'dist/index.js',
-    format: 'es',
+    format: 'umd',
     name: 'named'
   },
   plugins: [
