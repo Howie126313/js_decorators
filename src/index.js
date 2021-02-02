@@ -2,7 +2,7 @@
  * @Author: Bryan 
  * @Date: 2020-05-28 11:36:21 
  * @Last Modified by: Bryan
- * @Last Modified time: 2021-01-22 11:02:45
+ * @Last Modified time: 2021-01-27 18:05:30
  */
 
 // 基础类型装饰器
@@ -19,4 +19,8 @@ export default {
   validateNumber,
   validateArray,
   defineGetter
+}
+
+class A {
+  constructor
 }
