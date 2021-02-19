@@ -2,7 +2,7 @@
  * @Author: Bryan 
  * @Date: 2020-05-28 11:41:06 
  * @Last Modified by: Bryan
- * @Last Modified time: 2021-02-19 10:26:26
+ * @Last Modified time: 2021-02-19 16:09:24
  */
 
 import { property } from './decoratorsUntils'
@@ -18,7 +18,7 @@ export function accessor () {
 
 /**
  * 必要属性装饰器
- * @param {*} notice 必传属性对应的报错文案，字符串或函数类型（为函数时函数可以获取当前属性名，需设置返回值）
+ * @param {*} notice 报错文案，字符串或函数类型（为函数时函数可以获取当前属性名，需设置返回值）
  */
 export function required (notice) {
   return function (target, key, descriptor) {
@@ -33,7 +33,7 @@ export function required (notice) {
       target.requiredListNotice = new Map()
     }
     if (!target.requiredListNotice.has(realKey)) {
-      target.requiredListNotice.set(realKey, notice instanceof String ? notice : notice(realKey))
+      target.requiredListNotice.set(realKey, notice instanceof Function ? notice(realKey) : notice)
     } 
 
     let fn = property (target, key, descriptor, function (propertyName, val) {
@@ -46,9 +46,9 @@ export function required (notice) {
 /**
  * 
  * @param {*} regex 判断的正则规则表达式 e.g:/^[0-9]+.?[0-9]*$/
- * @param {*} notice 当不符合正则规则时，报错的提示文案
+ * @param {*} notice 报错文案，字符串或函数类型（为函数时函数可以获取当前属性名及属性值，需设置返回值）
  */
-export function regex (regex, notice = '') {
+export function regex (regex, notice) {
   return function (target, key, descriptor) {
     return property (target, key, descriptor, function (propertyName, val) {
       const realKey = propertyName.replace('_', '')
@@ -56,10 +56,14 @@ export function regex (regex, notice = '') {
         this[realKey] = val
         let reg = new RegExp(regex)
         if (!reg.test(val)) {
-          console.error(`landz-sensors-fullstack 报错：神策对象中${realKey}异常不符合 regex 规则，当前值为${val}，${notice}`)
+          if (notice) {
+            console.error(notice instanceof Function ? notice(realKey, val) : notice)
+          } else {
+            console.error(`报错：${realKey}异常不符合 regex 规则，当前值为${val}`)
+          }
         }
       } else {
-        console.error(`landz-sensors-fullstack 报错：装饰器 regex 只能用来修饰字符串或数字类型属性值；${realKey}格式传入错误，当前${typeof(val)}`)
+        console.error(`报错：regex 只能用来修饰字符串或数字类型属性值；${realKey}格式传入错误，当前格式为${typeof(val)}`)
       }
     })
   }
@@ -70,6 +74,9 @@ export function regex (regex, notice = '') {
  * @param {*} dealFn 设置的 getter 函数
  */
 export function defineGetter (dealFn) {
+  if (!dealFn instanceof Function) {
+    throw Error('defineGetter 的参数只能是函数')
+  }
   return function (target, key, descriptor) {
     return property(target, key, descriptor, function(propertyName, val) {
       const realKey = propertyName.replace('_', '')
