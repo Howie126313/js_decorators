@@ -2,7 +2,7 @@
  * @Author: Bryan 
  * @Date: 2020-05-28 11:41:06 
  * @Last Modified by: Bryan
- * @Last Modified time: 2021-01-22 16:48:41
+ * @Last Modified time: 2021-02-19 10:26:26
  */
 
 import { property } from './decoratorsUntils'
@@ -16,7 +16,11 @@ export function accessor () {
   }
 }
 
-export function required () {
+/**
+ * 必要属性装饰器
+ * @param {*} notice 必传属性对应的报错文案，字符串或函数类型（为函数时函数可以获取当前属性名，需设置返回值）
+ */
+export function required (notice) {
   return function (target, key, descriptor) {
     const realKey = key.replace('_', '')
     if (target.hasOwnProperty("requiredList")) {
@@ -24,6 +28,14 @@ export function required () {
     } else {
       target.requiredList = [realKey]
     }
+    
+    if (!target.hasOwnProperty("requiredListNotice")) {
+      target.requiredListNotice = new Map()
+    }
+    if (!target.requiredListNotice.has(realKey)) {
+      target.requiredListNotice.set(realKey, notice instanceof String ? notice : notice(realKey))
+    } 
+
     let fn = property (target, key, descriptor, function (propertyName, val) {
       this[realKey] = val
     })

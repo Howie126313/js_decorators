@@ -10,10 +10,8 @@
   },
   "author": "Bryan",
   "license": "ISC",
-  "dependencies": {
-    "rollup": "^2.11.2"
-  },
   "devDependencies": {
+    "rollup": "^2.11.2",
     "@babel/core": "^7.10.1",
     "@babel/preset-env": "^7.5.4",
     "babel-eslint": "^10.0.2",
