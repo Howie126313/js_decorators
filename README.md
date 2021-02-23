@@ -1,4 +1,4 @@
-# landz-decorators
+# js-decorators
 
 _常用的 JavaScript 装饰器_
 
@@ -6,12 +6,12 @@ _常用的 JavaScript 装饰器_
 Using npm:
 
 `
-  npm install landz-decorators --save-dev
+  npm install js-decorators --save-dev
 `
 
 # Usage
 ```
-import decorators from 'landz-decorators'
+import decorators from 'js-decorators'
 ```
 
 # decorators
@@ -56,7 +56,7 @@ console.log(obj) // person: Bryan, age: ''
 
 常用的访问器装饰器，使用访问器修饰后的属性才可以被获取到。
 ```
-import { Base, accessor } from 'landz-decorators'
+import { Base, accessor } from 'js-decorators'
 
 class Test extend Base {
   constructor (args) {
@@ -81,7 +81,7 @@ console.log(obj) // person: Bryan, age: undefined
 
 必要属性的装饰器，使用该装饰器修饰的类属性在实例化过程中，如果没有进行赋值会在控制台报错。具体报错内容可以自定义，装饰器接收一个参数可以使字符串也可以是函数。函数可以获取到对应描述的属性名称。
 ```
-import { Base, required } from 'landz-decorators'
+import { Base, required } from 'js-decorators'
 
 class Test extend Base {
   constructor (args) {
@@ -114,7 +114,7 @@ const obj = new Test({})
 
 正则装饰器，对实例化类时的属性值进行判断。如果不满足正则条件，会在控制台报错。具体报错内容可以自定义，装饰器接收一个参数可以使字符串也可以是函数。函数可以获取到对应描述的属性名称和当前属性值。
 ```
-import { Base, regex } from 'landz-decorators'
+import { Base, regex } from 'js-decorators'
 
 class Test extend Base {
   constructor (args) {
@@ -140,7 +140,7 @@ const obj = new Test({
 
 属性的 getter 装饰器，用来修改实例化后获取该属性的属性值。
 ```
-import { Base, defineGetter } from 'landz-decorators'
+import { Base, defineGetter } from 'js-decorators'
 
 class Test extend Base {
   constructor (args) {
@@ -166,7 +166,7 @@ obj.person // Howie
 
 判断实例化属性值类型的装饰器（@validateString、@validateNumber、@validateArray），如果不符合类型要求会在控制台报错。具体报错内容可以自定义，装饰器接收一个参数可以使字符串也可以是函数。函数可以获取到对应描述的属性名称和当前属性值。
 ```
-import { Base, validateString } from 'landz-decorators'
+import { Base, validateString } from 'js-decorators'
 
 class Test extend Base {
   constructor (args) {
